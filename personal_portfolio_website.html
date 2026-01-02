@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deeya Mathur | Portfolio</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ===================== Root & Variables ===================== */
+    :root {
+      --bg: #0b0c10;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent1: #7c3aed;
+      --accent2: #22d3ee;
+      --gradient-text: linear-gradient(90deg, var(--accent1), var(--accent2));
+      --gradient-btn: linear-gradient(135deg, var(--accent1), var(--accent2));
+      --dark-bg: #0b0c10;
+      --light-bg: #f9f9f9;
+      --dark-text: #e5e7eb;
+      --light-text: #0b0c10;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+      cursor: none;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===================== Cursor ===================== */
+    .cursor {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--gradient-btn);
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease;
+      z-index: 9999;
+    }
+
+    /* ===================== Scroll Progress ===================== */
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--gradient-btn);
+      z-index: 1000;
+    }
+
+    /* ===================== Floating Blobs ===================== */
+    .blob {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      filter: blur(140px);
+      opacity: 0.6;
+      animation: float 18s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    .blob.one {
+      background: var(--accent1);
+      top: -200px;
+      left: -200px;
+    }
+
+    .blob.two {
+      background: var(--accent2);
+      bottom: -200px;
+      right: -200px;
+      animation-delay: 6s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translateY(0) scale(1);
+      }
+
+      to {
+        transform: translateY(-100px) scale(1.2);
+      }
+    }
+
+    /* ===================== Header ===================== */
+    header {
+      padding: 180px 10vw 140px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 6vw, 5.8rem);
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+      animation: fadeUp 1.2s ease forwards;
+    }
+
+    header p {
+      max-width: 650px;
+      font-size: 1.15rem;
+      color: var(--muted);
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      animation: fadeUp 1.2s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 16px 28px;
+      border-radius: 999px;
+      background: var(--gradient-btn);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.4);
+    }
+
+    /* ===================== Sections ===================== */
+    section {
+      padding: 140px 10vw;
+      opacity: 0;
+      transform: translateY(80px);
+      transition: all 1s ease;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      margin-bottom: 50px;
+    }
+
+    /* ===================== Cards ===================== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+
+    .card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(24px);
+      border-radius: 26px;
+      padding: 40px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card:hover {
+      transform: translateY(-18px) scale(1.05);
+      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.6);
+    }
+
+    .card h3,
+    .project h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card p,
+    .project p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ===================== Projects ===================== */
+    .project {
+      display: flex;
+      flex-direction: column;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+      backdrop-filter: blur(22px);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project img {
+      width: 100%;
+      border-radius: 24px 24px 0 0;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.5s ease;
+    }
+
+    .project:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    .project-link {
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--gradient-btn);
+      align-self: flex-start;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project-link:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 45px rgba(124, 58, 237, 0.4);
+    }
+
+    /* ===================== Skills Bars ===================== */
+    .skills {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .skill {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .skill-bar {
+      flex: 1;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-left: 12px;
+    }
+
+    .skill-fill {
+      height: 100%;
+      width: 0;
+      background: var(--gradient-btn);
+      border-radius: 12px;
+      transition: width 1s ease;
+    }
+
+    /* ===================== Nav & Footer ===================== */
+    nav {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 14px 30px;
+      border-radius: 999px;
+      display: flex;
+      gap: 26px;
+      z-index: 1000;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-btn);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    footer {
+      padding: 80px 10vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    footer .contact-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    footer .contact-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-btn);
+      transition: width 0.3s ease;
+    }
+
+    footer .contact-links a:hover::after {
+      width: 100%;
+    }
+
+    footer .contact-links a:hover {
+      color: white;
+    }
+
+    /* ===================== Animations ===================== */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+
+    /* ===================== Certifications ===================== */
+    .certs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    .cert {
+      display: inline-block;
+      padding: 18px 28px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      color: white;
+      font-weight: 500;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cert::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      transform: rotate(45deg) scale(0);
+      transition: transform 0.5s ease;
+      z-index: 0;
+    }
+
+    .cert:hover::before {
+      transform: rotate(45deg) scale(1);
+    }
+
+    .cert:hover {
+      transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.4);
+      color: white;
+    }
+
+    .cert span {
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div class="progress"></div>
+  <div class="cursor"></div>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#certs">Certifications</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
+  <header id="about">
+    <h1>Welcome, I'm <span class="gradient-text">Deeya Mathur</span></h1>
+    <p>I craft <span id="typewriter"></span>, all with an eye for <em>beautiful, user-friendly experiences</em>.</p>
+    <a href="#projects" class="cta-btn">See My Work →</a>
+  </header>
+
+  <section>
+    <h2>What I Do</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Backend & Databases</h3>
+        <p>Designing robust APIs, scalable schemas, and data-driven systems using <strong>Python, Flask, MySQL</strong>.
+        </p>
+      </div>
+      <div class="card">
+        <h3>AI & Prompt Engineering</h3>
+        <p>Building AI-assisted tools, LLM-based assistants, and optimized prompts for real-world problem solving.</p>
+      </div>
+      <div class="card">
+        <h3>Product & UX Thinking</h3>
+        <p>Bridging design and development to create polished, intuitive, and human-focused digital experiences.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="cards">
+      <div class="card project">
+        <h3>Movie Ticket Booking System</h3>
+        <p>A GUI-based ticket booking app with real-time seat selection, CRUD operations, and MySQL backend.</p>
+        <a href="https://github.com/mathur458/Movie-Ticket-Booking" class="project-link">View Project →</a>
+      </div>
+      <div class="card project">
+        <h3>RBAC Server @ Jio</h3>
+        <p>Flask-based role-based access control server integrated with MySQL for telecom internal tools.</p>
+        <a href="https://github.com/mathur458/AA-Server-Internship-Project-" class="project-link">View Project →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill">Python <div class="skill-bar">
+          <div class="skill-fill" style="width:80%"></div>
+        </div>
+      </div>
+      <div class="skill">Flask <div class="skill-bar">
+          <div class="skill-fill" style="width:75%"></div>
+        </div>
+      </div>
+      <div class="skill">MySQL <div class="skill-bar">
+          <div class="skill-fill" style="width:90%"></div>
+        </div>
+      </div>
+      <div class="skill">Prompt Engineering <div class="skill-bar">
+          <div class="skill-fill" style="width:85%"></div>
+        </div>
+      </div>
+      <div class="skill">HTML/CSS/JS <div class="skill-bar">
+          <div class="skill-fill" style="width:80%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <h2>Certifications</h2>
+    <div class="certs">
+      <a href="https://github.com/mathur458/Certificates/blob/main/Version%20Control.pdf" target="_blank"
+        class="cert">Meta – Version Control</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Introduction%20to%20Python.pdf" target="_blank"
+        class="cert">Introduction to Python</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Introduction%20to%20Flask%20Framework.pdf"
+        target="_blank" class="cert">Duke – Flask Framework</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Flask%20For%20Beginners.pdf" target="_blank"
+        class="cert">Flask for Beginners</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Getting%20Started%20With%20Microsoft%20Excel.pdf"
+        target="_blank" class="cert">Microsoft Excel Basics</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Programming%20with%20JavaScript.pdf" target="_blank"
+        class="cert">JavaScript Programming</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/PromptEngineering.pdf" target="_blank"
+        class="cert">IBM – Prompt Engineering</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Introduction%20to%20Front%20End%20Development.pdf"
+        target="_blank" class="cert">Front End Development</a>
+      <a href="https://github.com/mathur458/Certificates/blob/main/Use%20WordPress%20to%20Create%20a%20Blog.pdf"
+        target="_blank" class="cert">WordPress Blog Creation</a>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div>© 2026 Deeya Mathur</div>
+    <div class="contact-links">
+      <a href="mailto:mathurdeeya458@gmail.com" target="_blank">Email</a> ·
+      <a href="https://github.com/mathur458" target="_blank">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/deeya-mathur" target="_blank">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script>
+    // ===================== Cursor =====================
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+
+    // ===================== Scroll Reveal =====================
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver(entries => { entries.forEach(entry => entry.isIntersecting && entry.target.classList.add('show')); }, { threshold: .2 });
+    sections.forEach(s => observer.observe(s));
+
+    // ===================== Progress Bar =====================
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const height = document.body.scrollHeight - window.innerHeight;
+      document.querySelector('.progress').style.width = (scrolled / height) * 100 + '%';
+    });
+
+    // ===================== Typewriter =====================
+    const words = ["intelligent software", "AI tools", "data systems", "user-friendly experiences"];
+    let i = 0, j = 0, currentWord = '', isDeleting = false;
+    const typeEl = document.getElementById('typewriter');
+    function type() {
+      currentWord = words[i];
+      if (isDeleting) typeEl.textContent = currentWord.substring(0, j--);
+      else typeEl.textContent = currentWord.substring(0, j++);
+      if (!isDeleting && j === currentWord.length + 1) { isDeleting = true; setTimeout(type, 800); }
+      else if (isDeleting && j < 0) { isDeleting = false; i = (i + 1) % words.length; setTimeout(type, 200); }
+      else setTimeout(type, isDeleting ? 50 : 100);
+    }
+    type();
+
+    // ===================== Animate Skills Bars =====================
+    const skillFills = document.querySelectorAll('.skill-fill');
+    window.addEventListener('scroll', () => {
+      const skillsSection = document.getElementById('skills');
+      const rect = skillsSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 100) {
+        skillFills.forEach(fill => fill.style.width = fill.style.width);
+      }
+    });
+
+    // ===================== Particle Background =====================
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    canvas.style.position = 'fixed';
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.zIndex = '-2';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const ctx = canvas.getContext('2d');
+    const particles = Array.from({ length: 80 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2 + 1, dx: (Math.random() - 0.5) / 2, dy: (Math.random() - 0.5) / 2 }));
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.dx; p.y += p.dy;
+        if (p.x > canvas.width) p.x = 0; if (p.x < 0) p.x = canvas.width;
+        if (p.y > canvas.height) p.y = 0; if (p.y < 0) p.y = canvas.height;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,0.08)'; ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+</body>
+
+</html>
